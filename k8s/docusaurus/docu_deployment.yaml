@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: api
+  name: docusaurus
 spec:
   selector:
     matchLabels:
-      app: api
+      app: docusaurus
   template:
     metadata:
       labels:
-        app: api
+        app: docusaurus
     spec:
       containers:
-      - name: api
-        image: ferrarijose/docusaurus:v2
+      - name: docusaurus
+        image: ferrarijose/docusaurus:v4
         ports:
         - containerPort: 80

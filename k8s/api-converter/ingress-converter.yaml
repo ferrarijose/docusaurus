@@ -1,0 +1,33 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: middleware
+spec:
+  stripPrefix:
+    forceSlash: false
+    prefixes:
+      - /converter
+---
+# Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: registry-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.middlewares: docusaurus-middleware@kubernetescrd
+spec:
+  tls:
+  - hosts:
+    - hinsch.com.br
+  rules:
+    - host: hinsch.com.br
+      http:
+        paths:
+        - path: /converter
+          pathType: Prefix
+          backend:
+            service:
+              name: converter
+              port:
+                number: 80
