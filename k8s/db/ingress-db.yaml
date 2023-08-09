@@ -6,16 +6,16 @@ spec:
   stripPrefix:
     forceSlash: false
     prefixes:
-      - /converter
+      - /banco
 ---
 # Ingress
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: registry-ingress
+  name: registry-ingress-banco
   annotations:
     kubernetes.io/ingress.class: traefik
-    traefik.ingress.kubernetes.io/router.middlewares: converter-middleware@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: banco-middleware@kubernetescrd
 spec:
   tls:
   - hosts:
@@ -24,10 +24,10 @@ spec:
     - host: hinsch.com.br
       http:
         paths:
-        - path: /converter
+        - path: /banco
           pathType: Prefix
           backend:
             service:
-              name: converter
+              name: banco
               port:
                 number: 80
